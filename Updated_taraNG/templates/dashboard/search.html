@@ -1,0 +1,125 @@
+
+{% extends 'main1.html' %} 
+
+{% block content %}
+	<title>{{ the_title }}</title>
+
+<script>
+$(document).ready(function(){
+    $('input[type="radio"]').click(function(){
+        var inputValue = $(this).attr("value");
+        var targetBox = $("." + inputValue);
+        $(".box").not(targetBox).hide();
+        $(targetBox).show();
+    });
+});
+</script>
+<script type="text/javascript">
+function openPage(pageName,elmnt,color) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].style.backgroundColor = "";
+  }
+  document.getElementById(pageName).style.display = "block";
+  elmnt.style.backgroundColor = color;
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
+
+
+    <div class="wrapper">
+        <div id="root">
+            <div>
+                <div>
+                    <div>
+                        <div>
+                            <div class="container">
+                            </div>
+
+                            <div class="container" style="margin-top: 50px;  ">
+
+ <div style=" width: auto;">
+
+	<div class="switch-field"  style="margin: 0px; justify-content:center;">
+
+		<input type="radio" id="radio-one" name="content_type" value="student" onclick="openPage('upload')" checked/>
+		<label for="radio-one" type="role"><b>Teachers</b></label>
+		<input type="radio" id="radio-two" name="content_type" value="teacher" onclick="openPage('create')"/>
+		<label for="radio-two" type="role"><b>Students</b></label>
+		<input type="radio" id="radio-three" name="content_type" value="topic" onclick="openPage('embedd_webinar')"/>
+		<label for="radio-three" type="role"><b>Topics</b></label>
+
+
+	</div>
+ <div id="upload" class="tabcontent" style="display: block; ">
+	<form style="height:auto; color:black;background-color:#ffffff; border:1px solid #000;border-radius:10px; padding-left:20px">
+
+	{% for lecturer in lecturers%}
+     <div class="details">
+	{% if lecturer.photo %}
+	<div class="details-side"><p class="avatar"><a><img src="{{url_for('static', filename=lecturer.photo)}}" alt="User avatar"></a></p></div>
+	{% else %}
+	<div class="details-side"><p class="avatar"><a><img src="{{url_for('static', filename='img/dashboard/user.png')}}" alt="User avatar"></a></p></div>
+	{% endif %}
+
+	<div class="details-main"><div class="details-header"><div class="details-title"><h3><a href="profile/{{lecturer.id}}">{{lecturer.name}}</a></h3><p class="institute">Institute: {{lecturer.institute|safe}}</p><p class="date">Joined <time datetime="2018-07-02">{{lecturer.created_at}}</time></p></div>
+	<hr style= 'color:red'>
+	</div>
+	</div>
+	</div>
+	{%endfor%}
+	</form>
+	</div>
+
+    <div id="create" class="tabcontent" style="display: none; ">
+	<form style="height: auto; color: black; background-color: #fff; border: 1px solid #000; border-radius: 10px; padding-left: 20px">
+
+
+	 {% for student in students%}
+     <div class="details">
+{% if student.photo %}
+<div class="details-side"><p class="avatar"><a><img src="{{url_for('static', filename=student.photo)}}" alt="User avatar"></a></p></div>
+{% else %}
+<div class="details-side"><p class="avatar"><a><img src="{{url_for('static', filename='img/dashboard/user.png')}}" alt="User avatar"></a></p></div>
+{% endif %}
+
+<div class="details-main"><div class="details-header"><div class="details-title"><h3><a href="profile_student/{{student.id}}">{{student.name}}</a></h3><p class="institute">Institute: {{student.institute|safe}}</p><p class="date">Joined <time datetime="2018-07-02">{{student.created_at}}</time></p></div>
+<hr style= 'color:red'>
+</div>
+</div>
+</div>
+ {%endfor%}
+ </form>
+
+	</div>
+
+    <div id="embedd_webinar" class="tabcontent" style="display: none; ">
+	<form style="height: auto; color: black; background-color: #ffffff; border: 1px solid #000; border-radius: 10px; padding-left: 20px">
+
+ <div class = 'summaries' style="width: 100%;  margin:auto; ">
+
+ {% for assignment in assignments%}
+ <div class="notebook-summary">
+     <div class="specs">
+
+<h3 class="title"><a href="/note/{{assignment.id}}">{{assignment.topic_name}}</a></h3>
+<p class="date">Published on <time title="2018-07-03 12:01" datetime="2018-07-03T12:01:50+05:30">{{assignment.created_at}}</time> in <a href="">{{assignment.topic_subject}}</a>
+</p>
+     <div class="short"><p>{{assignment.topic_abstract}}</p></div>
+     
+</div></div>
+      {%endfor%}
+</div>
+
+	</form>
+	</div>
+</div></div></div></div></div></div></div></div>
+
+{% endblock %}

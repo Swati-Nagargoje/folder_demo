@@ -1,0 +1,101 @@
+
+
+{% extends 'main1.html' %} 
+
+{% block content %}
+	<title>{{ the_title }}</title>
+<div id="MathJax_Message" style="display: none;"></div><div class="wrapper"><div id="root"><div><div><div><div> <div class="container"></div>
+
+<div class="container" style="margin-top: 10px;  ">
+
+	<div style=" width: 100%;   ">
+
+		<div class="switch-field">
+			<input type="radio" id="radio-three" name="content_type" value="student" checked />
+			<label for="radio-three" type="role"><b>Edit Profile</b></label>
+		</div>
+
+		<div id="Logo" align="left" style="background-size:700px 59px;height:99px;max-width:none; padding-right:50px;">
+			{% if lecturer.photo %}
+			<img src="{{url_for('static', filename=lecturer.photo)}}" alt="User avatar" id="profile" style="border-radius:50px; width: auto; height : auto; max-height: 100%; max-width: 100%;">
+			{% else %}
+			<img src="{{url_for('static', filename='img/dashboard/user.png')}}" id="profile" alt="User avatar" style="border-radius: 50px; width: auto; height: auto; max-height: 100%; max-width: 100%;">
+			{% endif %}
+			<br>
+			<button type="button" onclick="document.getElementById('file-input').click()" style="font-size:10px; border-radius:5px;color:white;background-color:#444;border-color:#444;height:35px; width:80px; margin: 2px;">Change Image</button>
+
+		</div>
+		<!-- <h3 style="margin-left: 20px;  ">{{lecturer.name}}</h3> -->
+		<h3 style="margin: 60px;  "></h3>
+		<form action="/edit_dashboard_success" method="post" style="background-color:#fff; border:1px solid #000;border-radius:10px;  padding-left: 20px; padding-right: 50px; " enctype="multipart/form-data">
+			<div class="container" style="width:100%">
+				<!-- Flash Message if error occured -->
+				{% if get_flashed_messages() %}
+				<p style="color: red">Error occurred ! Please try again</p>
+				{% endif %}
+				<br>
+				<input name="photo" style="visibility:hidden;" type="file" accept="image/*" onchange="document.getElementById('profile').src= window.URL.createObjectURL(this.files[0])" value="Change Profile Picture" id="file-input">
+				<label><b>Full Name:</b></label>
+				<input type="text" name="name" value="{{lecturer.name}}" required>
+
+				<label><b>Institute Name:</b></label>
+				<input type="text" name="institute" value="{{lecturer.institute}}" required>
+
+				<label><b>Department:</b></label>
+				<input type="text" name="department" value="{{lecturer.department}}" required>
+
+				{% if user_type=='teacher' %}
+				<label><b>Designation:</b></label>
+				<input type="text" name="designation" value="{{lecturer.designation}}" required>
+				<label><b>Membership:</b></label>
+				<input type="text" name="membership" value="{{lecturer.membership}}">
+				{% elif user_type=='student' %}
+				<label><b>Year:</b></label>
+				<input type="text" name="year" value="{{lecturer.year}}" required>
+				{% endif %}
+
+				<label><b>Phone Number:</b></label>
+				<input type="text" name="phone" value="{{lecturer.phone}}" required>
+
+				<label><b>Skills:</b></label>
+				<input type="text" name="skills" value="{{lecturer.skills}}">
+
+
+				{% if user_type=='teacher' %}
+				<label><b>Subjects:</b></label>
+				<input type="text" name="subjects" value="{{lecturer.subjects}}">
+
+				<label for="topic_name"><b>Education:</b></label><br>
+				<textarea maxlength="60000" name="education">{{lecturer.education}}</textarea>
+
+				<label for="topic_name"><b>Experience:</b></label><br>
+				<textarea maxlength="60000" name="experience">{{lecturer.experience}}</textarea>
+
+				{% elif user_type=='student' %}
+				<label for="topic_name"><b>Internship & Voluntary work:</b></label><br>
+				<textarea maxlength="60000" name="internship">{{lecturer.internship}}</textarea>
+				{% endif %}
+
+
+				<label for="topic_name"><b>Projects:</b></label><br>
+				<textarea maxlength="60000" name="projects">{{lecturer.projects}}</textarea>
+
+				<label for="topic_name"><b>Publications:</b></label><br>
+				<textarea maxlength="60000" name="publications">{{lecturer.publications}}</textarea>
+
+				<label for="topic_name"><b>Achievements:</b></label><br>
+				<textarea maxlength="60000" name="achievements">{{lecturer.achievements}}</textarea>
+
+				<label for="topic_name"><b>Other Information:</b></label><br>
+				<textarea maxlength="60000" name="about">{{lecturer.about}}</textarea>
+
+				<br><button type="submit" style="color:white;background-color:#444;border-color:#444;border-radius:2px;  height:30px; width:100px">Update</button>
+				<br><br>
+			</div>
+		</form><br />
+
+	</div>
+</div>
+</div></div></div></div></div></div>
+
+{% endblock %}

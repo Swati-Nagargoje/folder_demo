@@ -1,0 +1,167 @@
+{% extends 'main1.html' %}
+
+{% block content %}
+<title>{{ the_title }}</title>
+
+<script type="text/javascript">
+	function openPage(pageName, elmnt, color) {
+		var i, tabcontent, tablinks;
+		tabcontent = document.getElementsByClassName("tabcontent");
+		for (i = 0; i < tabcontent.length; i++) {
+			tabcontent[i].style.display = "none";
+		}
+		tablinks = document.getElementsByClassName("tablink");
+		for (i = 0; i < tablinks.length; i++) {
+			tablinks[i].style.backgroundColor = "";
+		}
+		document.getElementById(pageName).style.display = "block";
+		elmnt.style.backgroundColor = color;
+	}
+
+	// Get the element with id="defaultOpen" and click on it
+	document.getElementById("defaultOpen").click();
+</script>
+
+<div id="MathJax_Message" style="display: none;"></div><div class="wrapper">
+	<div id="root">
+		<div>
+			<div>
+				<div>
+					<div>
+						<div>
+							</div>
+
+					</div><div class="container">
+					</div><div class="container">
+						<div class="details">
+							<div class="details-side">
+								<!--<div class="vote"><div><a href="/note_upvote/{{assignment.id}}"><svg fill="currentColor" preserveAspectRatio="xMidYMid meet" height="1em" width="1em" viewBox="0 0 40 40" style="vertical-align: middle;"><g><path d="m38.4 16.6l-0.1 0.2h0.1v3.2c0 0.5-0.1 0.9-0.3 1.3l-5.1 11.7c-0.4 1.1-1.6 2-3 2h-15c-1.8 0-3.4-1.6-3.4-3.4v-16.6c0-0.9 0.4-1.7 1.1-2.3l10.9-11.1 1.8 1.8c0.5 0.5 0.7 1.1 0.7 1.8v0.5l-1.6 7.7h10.5c1.8 0 3.4 1.4 3.4 3.2z m-36.8 18.4v-20h6.8v20h-6.8z"></path></g></svg></a></div><span class="score">{{votes}}</span><div><a href="/note_upvote/{{assignment.id}}"></a></div>
+									</div> -->
+								<div class="vote">
+									<div>
+										<a style="border:none" href="/note_upvote/{{assignment.id}}"><i class="fa fa-thumbs-up" style=" font-size: 25px; cursor: pointer; user-select: none; border-radius: 5px; padding: 4px 15px; border: 1px solid #d84d0a;"></i></a>
+									</div>
+									<span class="score">{{votes}}</span><hr style="margin:0px;padding:0px">
+									{% if get_flashed_messages() %}
+									{% for message in get_flashed_messages() %}
+									<p style="color: #000000; text-align: center;font-weight: bold;">{{ message }}</p>
+									{% endfor %}
+									{% endif %}
+
+								</div>
+
+								
+							</div>
+		<div class="details-main">
+			<div class="details-header"><div class="details-title"><h1 class="title">{{assignment.topic_name}}</h1></div><div class="details-counts"><div class="counts"></div></div></div><div class="details-body">
+				<div class="details-primary"><div><p>{{assignment.topic_abstract}}</p></div></div><div class="details-secondary">
+					<div class="side">
+						{% if author.photo %}
+						<p class="avatar"><a><img src="{{url_for('static', filename=author.photo)}}" alt="User avatar"></a></p>
+						{% else %}
+						<p class="avatar"><a><img src="{{url_for('static', filename='img/dashboard/user.png')}}" alt="User avatar"></a></p>
+						{% endif %}
+					</div>
+					<div class="main">
+						<ul class="specs">
+							<li><div><span>Author:  </span><a href="/profile/{{author.id}}">{{author.name}}</a></div></li>
+							<li><div><span>Publisher:  </span><a href="/profile/{{lecturer.id}}">{{lecturer.name}}</a></div></li>
+							<li><span>Subject:</span><div> <a href="#">{{assignment.topic_subject}}</a></div></li>
+							<li><span>Chapter:</span><a href="">{{assignment.topic_chapter}}</a></li>
+							<li>
+							<li><span>Collaborators:</span><a href=""></a></li>
+							<li><span>Published:</span><div><time datetime="2018-09-28T22:24:13+05:30">{{assignment.created_at}}</time></div></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- <p id="checking">Click ckeck</p>
+	<div class="tile"><div><div class="tile-header"><ul class="tile-options"><li id="a"><a aria-current="false" href="" class="active">Notes</a></li><li id="a"><a aria-current="false" href="">Simulation</a></li><li id="a"><a aria-current="false" href="">Submission</a></li><li id="a"><a class="alt">Download</a></li></ul></div>
+	 -->
+								{% if assignment.topic_type == 'annoncement' %}
+								<p> Type:<b> Annoncement </b></p>
+
+								{% elif assignment.topic_type == 'embbed_webinar' %}
+								<div class="tile">
+									<div class="tile-header"><ul class="tile-options"><li id="a"><button onclick="">Embed</button></li></ul></div>
+									<div id="Notes" class="tabcontent" style="display: block; border:1px;">
+										<iframe src="{{assignment.topic_abstract|safe}}" height="600px" width="100%" border="0" style="border:1px; " allowfullscreen=true></iframe>
+									</div>
+								</div>
+
+								{% elif assignment.topic_type == 'TaraNG 3D' %}
+								<div class="tile">
+									<div class="tile-header" style="overflow: auto;">
+										<ul class="tile-options">
+											<li id="a"><button onclick="openPage('Notes')">Notes</button></li>
+											<li id="a"><button onclick="openPage('Simulation')">Simulation</button></li>
+											<li id="a"><button onclick="openPage('Submission')">Submission</button></li>
+											<li id="a"><form method="post" action="download_note/{{assignment.id}}">
+												<button style="border-radius:5px;color:black;border:1px solid black" type="submit"> Download</button>
+												 </form> 
+											</li>
+											
+										</ul>
+									</div>
+									<!-- <h1>{{url_for('static', filename=assignment.path + '/theory.html')}}</h1> -->
+									<!--	<li id="a"><form method="post" action="/note/download_note/{{assignment.id}}" > <button type="submit">download</button></form></li></ul></div>-->
+									<div id="Notes" class="tabcontent" style="display: block; border:1px;">
+										<iframe src="{{url_for('static', filename=assignment.path + '/theory.html')}}" height="600px" width="100%" border="0" style="border:1px; " allowfullscreen=true></iframe>
+									</div>
+
+									<div id="Submission" class="tabcontent" style="display: none; border:0px;">
+										x;
+										le
+										<iframe style="border:0px;" src="{{url_for('static', filename=assignment.path + '/submission.html')}}" height="600px" width="100%" border="0" allowfullscreen=true></iframe>
+										{{submission_status}}
+										{% if submission_status == 'Owner' %}
+										<button onclick="Report({{assignment.id}})">Report</button>
+										{% elif submission_status == 'NA' %}
+										<p style="color:black"> Only students are allowed to make submission.</p>
+										{% elif submission_status == 'False' %}
+										<p style="color:black"><b> Self-accessment:</b>Did you learned and grasped these concepts while making interactions?</p>
+										<button onclick="SubmitConformationMinus({{assignment.id}})">It's unclear to me!</button>
+										<button onclick="SubmitConformationPlus({{assignment.id}})">Yes, I did it! :)</button>
+										{% elif submission_status == 'True' %}
+										<p style="color:black"> Already made submission. Marks obtained = {{mark}}</p>
+										{% endif %}
+									</div>
+
+								</div>
+								{% endif %}
+
+							</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div></div></div>
+
+<script type="text/javascript">
+	function SubmitConformationPlus(id) {
+		if (window.confirm("Are you sure to make final submission?"))
+			window.location.replace("/note_submit_plus/" + id.toString());
+	}
+</script>
+
+<script type="text/javascript">
+	function SubmitConformationMinus(id) {
+		if (window.confirm("Are you sure to make final submission?"))
+			window.location.replace("/note_submit_minus/" + id.toString());
+	}
+</script>
+
+<script type="text/javascript">
+	function Report(id) {
+		window.open("/report/" + id.toString(), 'Report', 'toolbar=no,directories=no,status=no,linemenubar=no,modal=yes');
+	}
+</script>
+
+<script>!function (l) { function e(e) { for (var r, t, n = e[0], o = e[1], u = e[2], f = 0, i = []; f < n.length; f++)t = n[f], p[t] && i.push(p[t][0]), p[t] = 0; for (r in o) Object.prototype.hasOwnProperty.call(o, r) && (l[r] = o[r]); for (s && s(e); i.length;)i.shift()(); return c.push.apply(c, u || []), a() } function a() { for (var e, r = 0; r < c.length; r++) { for (var t = c[r], n = !0, o = 1; o < t.length; o++) { var u = t[o]; 0 !== p[u] && (n = !1) } n && (c.splice(r--, 1), e = f(f.s = t[0])) } return e } var t = {}, p = { 1: 0 }, c = []; function f(e) { if (t[e]) return t[e].exports; var r = t[e] = { i: e, l: !1, exports: {} }; return l[e].call(r.exports, r, r.exports, f), r.l = !0, r.exports } f.m = l, f.c = t, f.d = function (e, r, t) { f.o(e, r) || Object.defineProperty(e, r, { enumerable: !0, get: t }) }, f.r = function (e) { "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(e, "__esModule", { value: !0 }) }, f.t = function (r, e) { if (1 & e && (r = f(r)), 8 & e) return r; if (4 & e && "object" == typeof r && r && r.__esModule) return r; var t = Object.create(null); if (f.r(t), Object.defineProperty(t, "default", { enumerable: !0, value: r }), 2 & e && "string" != typeof r) for (var n in r) f.d(t, n, function (e) { return r[e] }.bind(null, n)); return t }, f.n = function (e) { var r = e && e.__esModule ? function () { return e.default } : function () { return e }; return f.d(r, "a", r), r }, f.o = function (e, r) { return Object.prototype.hasOwnProperty.call(e, r) }, f.p = "/"; var r = window.webpackJsonp = window.webpackJsonp || [], n = r.push.bind(r); r.push = e, r = r.slice(); for (var o = 0; o < r.length; o++)e(r[o]); var s = n; a() }([])</script>
+
+<div class="ReactModalPortal"></div><div class="ReactModalPortal"></div><div class="ReactModalPortal"></div><div class="ReactModalPortal"></div><div class="ReactModalPortal"></div><div class="ReactModalPortal"></div><div class="ReactModalPortal"></div><div class="ReactModalPortal"></div><div class="ReactModalPortal"></div><div class="ReactModalPortal"></div><div class="ReactModalPortal"></div>
+
+{% endblock %}

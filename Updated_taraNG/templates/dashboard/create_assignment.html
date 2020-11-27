@@ -1,0 +1,118 @@
+
+
+{% extends 'main1.html' %} 
+
+{% block content %}
+	<title>{{ the_title }}</title>
+
+<script type="text/javascript">
+function openPage(pageName,elmnt,color) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].style.backgroundColor = "";
+  }
+  document.getElementById(pageName).style.display = "block";
+  elmnt.style.backgroundColor = color;
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
+
+<div id="MathJax_Message" style="display: none;"></div><div class="wrapper"><div id="root"><div><div><div><div> <div class="container"></div>
+
+<div class="container" style="margin-top: 50px;  ">
+
+ <div style=" width: 100%;   ">
+ 
+	<div class="switch-field"  style="margin: 0 auto;  justify-content:center;">
+		<input type="radio" id="radio-one" name="content_type" value="tng" onclick="openPage('upload')" checked/>
+		<label for="radio-one" type="role" ><b>Upload TaraNG Content</b></label>
+		<input type="radio" id="radio-two" name="content_type" value="new" onclick="openPage('create')" />
+		<label for="radio-two" type="role"><b>Create Contents</b></label>
+		<!-- <input type="radio" id="radio-three" name="content_type" value="files" />
+		<label for="radio-three" type="role"><b>Upload Data Files Contents</b></label> -->
+		<input type="radio" id="radio-four" name="content_type" value="webembedd"   onclick="openPage('embedd_webinar')" />
+		<label for="radio-four" type="role"><b>Embed External Link/Webinar</b></label>
+		
+		<input type="radio" id="radio-three" name="content_type" value="announcement"  onclick="openPage('annoncement')" />
+		<label for="radio-three" type="role"><b>Make Announcement</b></label>
+	</div>
+	
+<div id="upload" class="tabcontent" style="display: block; ">
+<form action="/lecturer/create_assignment_success" method="post" style="background-color:#fff; border:1px solid #000;border-radius:10px;  padding-left: 50px; " enctype = "multipart/form-data">
+
+  	{% if get_flashed_messages() %}
+  		<p style="color: red">Error occurred ! Please try again</p>
+  	{% endif %}
+	
+    
+<!-- <input type="number" name="lecturer_id" value="{{lecturer.id}}" hidden>
+    <label><b>Name of Topic:</b></label>
+	<input type="text" name="topic_name" id="topic_name" required> -->
+    <br><label for="zip_file"><b>TaraNG exported zip file:</b></label><br>
+    <input type="file" name="zip_file" required><br>
+  	<br><button type="submit" style="color:white;background-color:#444;border-color:#444;border-radius:2px;  height:30px; width:100px" >Upload</button>
+	<br><br>
+</form>
+</div>
+<div id="create" class="tabcontent" style="display: none; ">
+<form action="/lecturer/create_assignment_success" method="post" style="background-color:#fff; border:1px solid #000;border-radius:10px;  padding-left: 50px; " enctype = "multipart/form-data">
+
+<!-- <input type="number" name="lecturer_id" value="{{lecturer.id}}" hidden>
+    <label><b>Name of Topic:</b></label>
+	<input type="text" name="topic_name" id="topic_name" required> -->
+    <br><label for="zip_file"><b>This feature will be launched soon! </b></label><br><br><br><br>
+</form>
+</div>
+
+<div id="annoncement" class="tabcontent" style="display: none; ">
+<form action="/lecturer/create_annoncement_success" method="post" style="background-color:#fff; border:1px solid #000;border-radius:10px;  padding-left: 20px; padding-right: 50px; " enctype = "multipart/form-data">
+  <div class="container" style="width:100%">
+	<!-- Flash Message if error occured -->
+  	<!-- {% if get_flashed_messages() %}
+  		<h3 style="color: red">Error occurred ! Please try again</h3>
+  	{% endif %} -->
+
+    <br><label for="topic_name"><b>Announcement Title</b></label><br>
+    <input type="text" name="topic_name" required><br>
+
+    <label for="topic_name"><b>Description</b></label><br>
+    <textarea  maxlength="60000" name="topic_abstract"></textarea>
+	
+  	<br><button type="submit" style="color:white;background-color:#444;border-color:#444;border-radius:2px;  height:30px; width:100px" >Announce</button>
+	<br><br>
+  </div>
+</form><br />
+</div>
+
+<div id="embedd_webinar" class="tabcontent" style="display: none; ">
+<form action="/lecturer/create_embedd_success" method="post" style="background-color:#fff; border:1px solid #000;border-radius:10px;  padding-left: 20px; padding-right: 50px; " enctype = "multipart/form-data">
+  <div class="container" style="width:100%">
+	<!-- Flash Message if error occured -->
+  	{% if get_flashed_messages() %}
+  		<h3 style="color: red">Error occurred ! Please try again</h3>
+  	{% endif %}
+
+    <br><label for="topic_name"><b>Title</b></label><br>
+    <input type="text" name="topic_name" required><br>
+
+    <label for="topic_name"><b>Embedd link for source (3rd party)</b></label><br>
+    <textarea  maxlength="60000" name="topic_abstract"></textarea>
+	
+  	<br><button type="submit" style="color:white;background-color:#444;border-color:#444;border-radius:2px;  height:30px; width:100px" >Embedd</button>
+	<br><br>
+  </div>
+</form><br />
+</div>
+
+</div>
+</div>
+</div></div></div></div></div></div>
+
+{% endblock %}

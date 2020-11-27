@@ -1,0 +1,238 @@
+{% extends 'main1.html' %}
+
+{% block content %}
+	<title>{{ the_title }}</title>
+<script type="text/javascript">
+	function openPage(pageName) {
+		var i, tabcontent;
+		tabcontent = document.getElementsByClassName("tile");
+		for (i = 0; i < tabcontent.length; i++) {
+			tabcontent[i].style.display = "none";
+		}
+		document.getElementById(pageName).style.display = "block";
+		// elmnt.style.backgroundColor = color;
+	}
+
+	// Get the element with id="defaultOpen" and click on it
+	//document.getElementById("defaultOpen").click();
+</script>
+<script type="text/javascript">
+	function DeleteConformation(id) {
+		if (window.confirm("It will delete the assignment permanently"))
+			window.location.replace("/lecturer/delete_assignment/" + id.toString());
+	}
+</script>
+<script>
+	function myFunction() {
+		var x = document.getElementById("myLinks");
+		if (x.style.display === "block") {
+			x.style.display = "none";
+		} else {
+			x.style.display = "block";
+		}
+	}
+</script>
+
+<body>
+	<div id="MathJax_Message" style="display: none;"></div><div class="wrapper">
+		<div id="root">
+			<div>
+				<div>
+					<div>
+						<div>
+							<div class="container"></div>
+
+							<div class="container" style="margin-left:0px;border-color:5px solid brown">
+								<div id="Logo" align="left" style="background-size:700px 59px;height:99px;max-width:none;">
+									{% if lecturer.photo %}
+									<img src="{{url_for('static', filename=lecturer.photo)}}" alt="User avatar" id="profile" style="border-radius:50px; width: auto; height : auto; max-height: 100%; max-width: 100%;">
+									{% else %}
+									<img src="{{url_for('static', filename='img/dashboard/user.png')}}" id="profile" alt="User avatar" style="width: auto; height : auto; max-height: 100%; max-width: 100%;">
+									{% endif %}
+									<br>
+
+								</div>
+								<div class="details">
+
+
+									<div class="details-main">
+										<div class="details-header">
+											<div class="details-title">
+												<h1 class="title">{{lecturer.name}}</h1>
+												<p class="date">Joined <time datetime="2018-07-02">{{lecturer.created_at}}</time></p>
+											</div>
+											<div class="details-counts">
+												<div class="counts">
+													<ul>
+														<li class="views"><span class="count">{{assignments_own|length}}</span>Notes</li>
+														<li class="votes"><span class="count">{{upvotes}}</span>Votes</li>
+														<li class="comments"><span class="count">{{num_students}}</span>Students</li>
+													</ul>
+												</div>
+											</div>
+										</div>
+
+
+										<div class="details-body">
+											<div class="details-primary">
+												<div>
+
+													<div>
+														<ul>
+															{% if lecturer.designation != 'None' %}
+															<li>Designation: {{lecturer.designation}}</li>{% endif %}
+
+
+															{% if lecturer.institute != 'None' %}
+															<li>Institute:{{lecturer.institute|safe}}</li>{% endif %}
+
+															{% if lecturer.department != 'None' %}
+															<li>Department:{{lecturer.department}}</li>{% endif %}
+
+															{% if lecturer.membership != 'None' %}
+															<li>Membership: {{ lecturer.membership }}</li> {% endif %}
+															{% if lecturer.skills != 'None' %}
+															<li>Skills: {{lecturer.skills}}</li> {% endif %}
+															{% if lecturer.subjects != 'None' %}
+															<li>Subjetcs teaching: {{lecturer.subjects}}</li> {% endif %}
+															{% if lecturer.education != 'None' %}
+															<li>Education: {{lecturer.education}}</li> {% endif %}
+															{% if lecturer.experience != 'None' %}
+															<li>Experience: {{lecturer.experience}}</li> {% endif %}
+															{% if lecturer.projects != 'None' %}
+															<li>Projects: {{lecturer.projects}}</li> {% endif %}
+															{% if lecturer.publications != 'None' %}
+															<li>Publications: {{lecturer.publications}}</li> {% endif %}
+															{% if lecturer.achievements != 'None' %}
+															<li>achievements: {{lecturer.achievements}}</li> {% endif %}
+															{% if lecturer.about != 'None' %}
+															<li>{{lecturer.about}}</li> {% endif %}
+														</ul>
+													</div>
+													<!--		<ul class="networks">
+							<li><a style="padding:5px 5px;border-radius:5px;border:1px solid black" href="/edit_dashboard"><span></span><span>Edit Profile</span></a></li>
+							<li><a style="padding:5px 5px;border-radius:5px;border:1px solid black" href="/lecturer/requests"><span></span><span>Followers</span></a></li>
+						</ul> -->
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							{% if  teachers|length >0%}
+							<div class="container">
+								<p>
+									I am following:
+									{% for teacher in teachers %}<a href="/profile/{{teacher.id}}"><span>{{teacher.name}}</span></a>, {% endfor %}
+								</p>
+							</div>
+							{% else %}
+							<div class="container">
+								<p>You are not following any teacher.</p>
+							</div>
+							{% endif %}
+
+							<div class="container" style="display: block; background-color: #e4e4e4; border-radius: 5px; padding-left:10px;">
+								<br><b>Intiative</b><br><p>We are promoting and publishing selective contents on our resource center. These quality contents are made free and openly available for all users. <br>To help out learners during this pendamic you may contribute for the same.<br> Learn together! Work together! Grow together!</p>
+								Link to get contents from <a><u>Resouce Center</u></a><br>
+								Link to submit the <a href="/lecturer/collaborate"><u>Contribution</u></a><br>
+								Link to <a><u>Download and activate TaraNG</u></a><br>
+								<br>
+							</div>
+
+							<p></p>
+							<div class="switch-field" style=" justify-content:center;">
+								<input type="radio" id="radio-three" name="content_type" value="student" onclick="openPage('MyContent')" checked />
+								<label for="radio-three" type="role">My Content</label>
+								<input type="radio" id="radio-four" name="content_type" value="teacher" onclick="openPage('FollowedContents')" />
+								<label for="radio-four" type="role">Followed Contents</label>
+							</div>
+
+							<div class="container">
+
+								{% if assignments_own|length >0%}
+								<div class="tile" style="display: block;" id="MyContent">
+									<div><form name="searchForm"><div class="filters"><div class="sort-inputs"><label>Sort by:<select type="submit"><option value="Comments">Comments</option><option value="Date">Date</option><option value="Discover">Discover</option><option value="Views">Views</option><option value="Votes">Votes</option></select></label><label><select><option value="Today">Today</option><option value="This month">This month</option><option value="This year">This year</option><option value="All time">All time</option></select></label><p class="totals">{{assignments_own|length}}  Notes</p></div><div class="filter-inputs"><label>Subject:<select type="submit"><option>All</option><option>Antenna Design</option><option>Microwave Integrated Circuits</option><option>EMI/EMC</option></select></label><label>Content:<select type="submit"><option value="All">All</option><option value="Julia">Notes</option><option value="Matlab">Simulation</option><option value="Other">Submission</option></select></label><button><svg fill="currentColor" preserveAspectRatio="xMidYMid meet" height="1em" width="1em" viewBox="0 0 40 40" style="vertical-align: middle;"><g><path d="m27.2 18.6q0-4.2-2.9-7.1t-7.1-2.9-7 2.9-3 7.1 2.9 7 7.1 3 7.1-3 2.9-7z m11.4 18.5q0 1.2-0.8 2.1t-2 0.8q-1.2 0-2-0.8l-7.7-7.7q-4 2.8-8.9 2.8-3.2 0-6.1-1.3t-5-3.3-3.4-5-1.2-6.1 1.2-6.1 3.4-5.1 5-3.3 6.1-1.2 6.1 1.2 5 3.3 3.4 5.1 1.2 6.1q0 4.9-2.7 8.9l7.6 7.6q0.8 0.9 0.8 2z"></path></g></svg></button></div></div></form></div>
+									<div class="summaries">
+										<div>
+											{% for assignment in assignments_own %}
+											<div class="notebook-summary">
+												<div class="specs">
+													<h3 class="title"><a href="/note/{{assignment.id}}">{{assignment.topic_name}}</a></h3>
+													<p class="date">
+														Published  <time title="2018-07-03 12:01" datetime="2018-07-03T12:01:50+05:30">{{assignment.created_at}}</time> by <a href="">{{lecturer.name}} </a>in <a href="">{{assignment.topic_subject}}</a>
+														{% if assignment.lecturer_id == assignment.author_id %}
+														<span><span class="dot"></span><span><span>Author</span></span></span>
+														{% else %}
+														<span><span class="dot"></span><span><span>Adopter</span></span></span>
+														{% endif %}
+													</p>
+													<div class="short">
+														<p>{{assignment.topic_abstract}}</p>
+														<a href="/lecturer/edit_assignment/{{assignment.id}}">Edit</a> <a>
+															| <a>
+																<a href="/lecturer/delete_assignment/{{assignment.id}}" onclick="DeleteConformation({{assignment.id}})">Delete</a>
+													</div>
+												</div>
+											</div>
+											{% endfor %}
+										</div>
+									</div>
+									<ul class="pagination text-center"><li class="pagination-previous disabled"><a tabindex="0">Prev</a></li><li class="current"><a tabindex="0" aria-label="Page 1 is your current page" aria-current="page">1</a></li><li class="pagination-next disabled"><a tabindex="0">Next</a></li></ul>
+								</div>
+								{% else %}
+								<div class="tile" style="display: block;  background-color: #e4e4e4;" id="MyContent">
+									<p>You have not uploaded any contents yet!</p>
+								</div>
+								{% endif %}
+
+								<!-- <div class="tile" style="display: none;  background-color: #e4e4e4; " id ="FollowedContents"><div>
+								<p> Second tab empty</p>
+								</div>
+								</div> -->
+								{% if assignments_followed|length >0%}
+								<div class="tile" style="display: none;" id="FollowedContents">
+									<div><form name="searchForm"><div class="filters"><div class="sort-inputs"><label>Sort by:<select type="submit"><option value="Comments">Comments</option><option value="Date">Date</option><option value="Discover">Discover</option><option value="Views">Views</option><option value="Votes">Votes</option></select></label><label><select><option value="Today">Today</option><option value="This month">This month</option><option value="This year">This year</option><option value="All time">All time</option></select></label><p class="totals">{{assignments_own|length}}  Notes</p></div><div class="filter-inputs"><label>Subject:<select type="submit"><option>All</option><option>Antenna Design</option><option>Microwave Integrated Circuits</option><option>EMI/EMC</option></select></label><label>Content:<select type="submit"><option value="All">All</option><option value="Julia">Notes</option><option value="Matlab">Simulation</option><option value="Other">Submission</option></select></label><button><svg fill="currentColor" preserveAspectRatio="xMidYMid meet" height="1em" width="1em" viewBox="0 0 40 40" style="vertical-align: middle;"><g><path d="m27.2 18.6q0-4.2-2.9-7.1t-7.1-2.9-7 2.9-3 7.1 2.9 7 7.1 3 7.1-3 2.9-7z m11.4 18.5q0 1.2-0.8 2.1t-2 0.8q-1.2 0-2-0.8l-7.7-7.7q-4 2.8-8.9 2.8-3.2 0-6.1-1.3t-5-3.3-3.4-5-1.2-6.1 1.2-6.1 3.4-5.1 5-3.3 6.1-1.2 6.1 1.2 5 3.3 3.4 5.1 1.2 6.1q0 4.9-2.7 8.9l7.6 7.6q0.8 0.9 0.8 2z"></path></g></svg></button></div></div></form></div>
+									<div class="summaries">
+										<div>
+											{% for assignment in assignments_followed %}
+											<div class="notebook-summary">
+												<div class="specs">
+													<h3 class="title"><a href="/note/{{assignment.id}}">{{assignment.topic_name}}</a></h3>
+													<p class="date">
+														Published  <time title="2018-07-03 12:01" datetime="2018-07-03T12:01:50+05:30">{{assignment.created_at}}</time> in <a href="">{{assignment.topic_subject}}</a>
+														{% if assignment.lecturer_id == assignment.author_id %}
+														<span><span class="dot"></span><span><span>Author</span></span></span>
+														{% else %}
+														<span><span class="dot"></span><span><span>Adopted</span></span></span>
+														{% endif %}
+													</p>
+													<div class="short">
+														<p>{{assignment.topic_abstract}}</p>
+														<a href="/lecturer/adopt_assignment/{{assignment.id}}">Adopt</a>
+
+													</div>
+												</div>
+											</div>
+											{% endfor %}
+										</div>
+									</div>
+									<ul class="pagination text-center"><li class="pagination-previous disabled"><a tabindex="0">Prev</a></li><li class="current"><a tabindex="0" aria-label="Page 1 is your current page" aria-current="page">1</a></li><li class="pagination-next disabled"><a tabindex="0">Next</a></li></ul>
+								</div>
+								{% else %}
+								<div class="tile" style="display: none;  background-color: #e4e4e4;" id="FollowedContents">
+									<p>No content to show here! Please Join classroom to get the contents!</p>
+								</div>
+								{% endif %}
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{% endblock %}

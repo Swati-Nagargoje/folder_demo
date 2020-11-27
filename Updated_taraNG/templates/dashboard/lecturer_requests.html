@@ -1,0 +1,164 @@
+{% extends 'main1.html' %}
+
+{% block content %}
+    <title>{{ the_title }}</title>
+        <div id="MathJax_Message" style="display: none;"></div>
+        <div class="wrapper">
+            <div id="root">
+                <div>
+                    <div>
+                        <div>
+                            <div>
+                                <div class="container" style="margin-top: 30px;">
+                                    <div class="tile" style="display: block;  background-color: #ffffff; overflow:auto;">
+                                        <div class="row" style="padding-left: 10px;">
+                                            <h3>Teacher's Requests Pending</h3>
+                                        </div>
+                                        {% if lecturers_request|length>0 %}
+                                        <div class="row table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                <th>Name</th>
+                                                <th>Institute Name</th>
+                                                <th>Email</th>
+                                                <th>Accept</th>
+                                                <th>Decline</th>
+                                                </thead>
+                                                <tbody>
+                                                    {% for lecturer in lecturers_request %}
+                                                    <tr>
+                                                        <td><a href="/profile/{{lecturer.id}}">{{lecturer.name}}</a></td>
+                                                        <td>{{lecturer.institute}}</td>
+                                                        <td>{{lecturer.email}}</td>
+                                                        <td><a href="/lecturer/lecturer_request_accept/{{lecturer.id}}"><button class="btn btn-primary" style="width:60px;height:3px;color:white;background-color:#444;border-color:#444;border-radius=10px;">Accept</button></a></td>
+                                                        <td><a href="/lecturer/lecturer_request_deny/{{lecturer.id}}"><button class="btn btn-primary" style="width:60px;height:2px;color:white;background-color:#444;border-color:#444;border-radius=10px;">Decline</button></a></td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        {% else %}
+                                        <p>No requests are pending!</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="container" style="margin-top: 30px;">
+                                    <div class="tile" style="display: block;  background-color: #ffffff; overflow:auto;">
+                                        <div class="row" style="padding-left: 10px;">
+                                            <h3>Student's Requests Pending</h3>
+                                        </div>
+                                        {% if students_request|length>0 %}
+                                        <div class="row table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                <th>Name</th>
+                                                <th>Institute Name</th>
+                                                <th>Email</th>
+                                                <th>Accept</th>
+                                                <th>Decline</th>
+                                                </thead>
+                                                <tbody>
+                                                    {% for student in students_request %}
+                                                    <tr>
+                                                        <td><a href="/profile_student/{{student.id}}">{{student.name}}</a></td>
+                                                        <td>{{student.institute}}</td>
+                                                        <td>{{student.email}}</td>
+                                                        <td><a href="/lecturer/student_request_accept/{{student.id}}"><button class="btn btn-primary" style="width:60px;height:25px;color:white;background-color:#444;border-color:#444;border-radius=10px;">Accept</button></a></td>
+                                                        <td><a href="/lecturer/student_request_deny/{{student.id}}"><button class="btn btn-primary" style="width:60px;height:2px;color:white;background-color:#444;border-color:#444;border-radius=10px;">Decline</button></a></td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        {% else %}
+                                        <p>No requests are pending!</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="container" style="margin-top: 30px;">
+                                    <div class="tile" style="display: block;  background-color: #ffffff;overflow:auto;">
+                                        <div class="row" style="padding-left: 10px;">
+                                            <h3>Teacher's Requests Accepted</h3>
+                                        </div>
+                                        {% if lecturers_accepted|length>0 %}
+                                        <div class="row table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                <th>Name</th>
+                                                <th>Institute Name</th>
+                                                <th>Email</th>
+                                                <th>Remove</th>
+                                                </thead>
+                                                <tbody>
+                                                    {% for lecturer in lecturers_accepted %}
+                                                    <tr>
+                                                        <td><a href="/profile/{{lecturer.id}}">{{lecturer.name}}</a></td>
+                                                        <td>{{lecturer.institute}}</td>
+                                                        <td>{{lecturer.email}}</td>
+                                                        <td><a href="/lecturer/lecturer_request_remove/{{lecturer.id}}"><button class="btn btn-primary" style="width:70px;height:25px;color:white;background-color:#444;border-color:#444;border-radius=15px;">Remove</button></a></td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        {% else %}
+                                        <p>No requests are accepted yet!</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="container" style="margin-top: 30px;">
+                                    <div class="tile" style="display: block;background-color: #ffffff;overflow: auto;">
+                                        <div class="row" style="padding-left: 10px;">
+                                            <h3>Student's Requests Accepted</h3>
+                                        </div>
+                                        {% if students_accepted|length>0 %}
+                                        <div class="row table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                <th>Name</th>
+                                                <th>Institute Name</th>
+                                                <th>Email</th>
+                                                <th>Remove</th>
+                                                </thead>
+                                                <tbody>
+                                                    {% for student in students_accepted %}
+                                                    <tr>
+                                                        <td><a href="/profile_student/{{student.id}}">{{student.name}}</a></td>
+                                                        <td>{{student.institute}}</td>
+                                                        <td>{{student.email}}</td>
+                                                        <td>
+                                                            <a href="/lecturer/student_request_remove/{{student.id}}">
+                                                                <button class="btn btn-primary"
+                                                                        style="width:80px;height:25px;color:white;background-color:#444;border-color:#444;border-radius=10px;">
+                                                                    Remove
+                                                                </button>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        {% else %}
+                                        <p>No requests are accepted yet!</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+
+                                <div class="container" style="margin-top: 30px;">
+                                    <div class="tile" style="display: none;  background-color: #e4e4e4;" id="FollowedContents">
+                                        <p>No content to show here! Please Join classroom to get the contents!</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

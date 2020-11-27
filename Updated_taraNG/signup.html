@@ -1,0 +1,272 @@
+
+{% block links %}
+	<link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.ico')}}" />
+		<!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css')}}"> -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+{% endblock %}
+
+
+{% block scripts %}
+	<script src="{{url_for('static', filename='js/jquery-3.2.1.min.js')}}"></script>
+	<script src="{{url_for('static', filename='js/popper.js')}}"></script>
+	<script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+	<script src="{{url_for('static', filename='js/particles.js')}}"></script>
+	<script src="{{url_for('static', filename='js/app.js')}}"></script>
+
+	
+	<script type="text/javascript">
+	    function Validate() {
+	        var password = document.getElementById("password").value;
+	        var confirmPassword = document.getElementById("password-repeat").value;
+	        if (password != confirmPassword) {
+	            alert("Password and Repeat Password do not match.");
+	            return false;
+	        }
+	        return true;
+	    }
+	</script>
+	<style>
+		* {
+  	box-sizing: border-box;
+  	font-family: -apple-system, BlinkMacSystemFont, "segoe ui", roboto, oxygen, ubuntu, cantarell, "fira sans", "droid sans", "helvetica neue", Arial, sans-serif;
+  	font-size: 16px;
+  	-webkit-font-smoothing: antialiased;
+  	-moz-osx-font-smoothing: grayscale;
+}
+body {
+    background-color: #ff9900;
+    background: -webkit-linear-gradient(right top, #ff6600, #ff9900);
+    background: -o-linear-gradient(bottom left, #ff6600, #ff9900);
+    background: -moz-linear-gradient(bottom left, #ff6600, #ff9900);
+    background: linear-gradient(to bottom left, #ff6600, #ff9900);
+    background-size: cover;
+    overflow-y: scroll;
+}
+#particles-js {
+    width: 100%;
+    height: 100%;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: fixed;
+    z-index: -1;
+    display: none;
+}
+
+.login, .register {
+  	width: 400px;
+	  background-color: #ffffff;
+  	box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.3);
+  	margin: 100px auto;
+} 
+.login h1, .register h1 {
+  	text-align: center;
+	color: #5b6574;
+	background-color: deepskyblue;
+
+  	font-size: 24px;
+  	padding: 20px 0 20px 0;
+  	border-bottom: 1px solid #dee0e4;
+}
+.login .links, .register .links {
+  	display: flex;
+  	padding: 0 15px;
+}
+.login .links a, .register .links a {
+  	color: #adb2ba;
+  	text-decoration: none;
+  	display: inline-flex;
+  	padding: 0 10px 10px 10px;
+  	font-weight: bold;
+}
+.login .links a:hover, .register .links a:hover {
+  	color: #9da3ac;
+}
+.login .links a.active, .register .links a.active {
+  	border-bottom: 2px solid #fc8536;
+  	color: #fc8536;
+}
+.login form, .register form {
+  	display: flex;
+  	flex-wrap: wrap;
+  	justify-content: center;
+  	padding-top: 20px;
+}
+.login form label, .register form label {
+  	display: flex;
+  	justify-content: center;
+  	align-items: center;
+  	width: 50px;
+  	height: 50px;
+  	background-color: #fc8536;
+  	color: #ffffff;
+}
+.login form label[type="role"], .register form label[type="role"] {
+  	width: 100px;
+  	height: 40px;
+	background-color: #e4e4e4;
+	color: rgba(0, 0, 0, 0.6);
+	font-size: 14px;
+	line-height: 1;
+	text-align: center;
+	padding: 8px 16px;
+	margin-right: -1px;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
+	transition: all 0.1s ease-in-out;
+}
+
+.login form label[type="role"]:hover, .register form label[type="role"]:hover {
+	cursor: pointer;
+	background-color: #fdd3b8;
+}
+
+.login form input[type="password"], .register form input[type="institute"], .login form input[type="text"], .login form input[type="email"], .register form input[type="password"], .register form input[type="text"], .register form input[type="email"] {
+  	width: 310px;
+  	height: 50px;
+  	border: 1px solid #dee0e4;
+  	margin-bottom: 20px;
+  	padding: 0 15px;
+}
+.login form input[type="submit"], .register form input[type="submit"] {
+	
+	padding: 15px;
+	margin-top: 20px;
+	background-color:black;
+	width: 55%;	
+	border: 0;
+	cursor: pointer;
+	font-weight: bold;
+	color: #ffffff;
+	transition: background-color 0.2s;
+}
+.login form input[type="submit"]:hover, .register form input[type="submit"]:hover {
+  	background-color: #f07804;
+  	transition: background-color 0.2s;
+}
+ 
+body.loggedin {
+  	background-color: #f3f4f7;
+}
+.content {
+  	width: 1000px;
+  	margin: 0 auto;
+}
+.content h2 {
+  	margin: 0;
+  	padding: 25px 0;
+  	font-size: 22px;
+  	border-bottom: 1px solid #e0e0e3;
+  	color: #4a536e;
+}
+.content > p, .content > div {
+  	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+  	margin: 25px 0;
+  	padding: 25px;
+	background-color: #fff;
+}
+.content > p table td, .content > div table td {
+	padding: 5px;
+}
+.content > p table td:first-child, .content > div table td:first-child {
+	font-weight: bold;
+	color: #4a536e;
+	padding-right: 15px;
+}
+.content > div p {
+	padding: 5px;
+	margin: 0 0 10px 0;
+}
+		</style>
+		
+		<style>
+		.switch-field {
+	display: flex;
+	margin-bottom: 36px;
+	overflow: hidden;
+}
+
+.switch-field input {
+	position: absolute !important;
+	clip: rect(0, 0, 0, 0);
+	height: 1px;
+	width: 1px;
+	border: 0;
+	overflow: hidden;
+}
+
+.switch-field label {
+	background-color: #e4e4e4;
+	color: rgba(0, 0, 0, 0.6);
+	font-size: 14px;
+	line-height: 1;
+	text-align: center;
+	padding: 8px 16px;
+	margin-right: -1px;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
+	transition: all 0.1s ease-in-out;
+}
+
+
+.switch-field input:checked + label {
+	background-color: #fda366;
+	box-shadow: none;
+}
+
+.switch-field label:first-of-type {
+	border-radius: 4px 0 0 4px;
+}
+
+.switch-field label:last-of-type {
+	border-radius: 0 4px 4px 0;
+}		
+</style>
+{% endblock %}
+
+
+
+{% block body %}
+<div id="particles-js" class="d-md-block"><canvas class="particles-js-canvas-el" width="1366" height="608" style="width: 100%; height: 100%;"></canvas></div>
+
+<div>
+<div class="register">
+	<h1>Sign Up</h1>
+		{% if get_flashed_messages() %}
+			{% for message in get_flashed_messages() %}
+				<p style="color: red; text-align: center">{{ message }}</p>
+			{% endfor %}
+		{% endif %}
+<form action="/signup_success" method="post">
+    <label for="username"><i class="fas fa-user"></i></label>
+	<input type="text" name="name" placeholder="Enter Name" id="username" required>
+
+    <label for="email"><i class="fas fa-envelope"></i></label>
+	<input type="email" name="email" placeholder="Enter Email" id="email" required>
+	
+    <label for="institute"><i class="fa fa-university"></i></label>
+	<input type="institute" name="institute" placeholder="Institute Name" id="institute" required>
+
+    <label for="password"><i class="fas fa-lock"></i></label>
+    <input type="password" placeholder="Enter Password" name="password" id="password" required>
+
+    <label for="password"><i class="fas fa-lock"></i></label>
+    <input type="password" placeholder="Repeat Password" name="password-repeat" id="password-repeat" required>
+
+	<div class="switch-field">
+		<input type="radio" id="radio-three" name="user_type" value="student" checked/>
+		<label for="radio-three" type="role">Student</label>
+		<input type="radio" id="radio-four" name="user_type" value="teacher" />
+		<label for="radio-four" type="role">Teacher</label>
+	</div>
+	
+	<input type="submit" value="Register">
+
+		<div><p> Already Have Account?<a href="login">Login </a></p> </div>
+
+</form>
+</div>
+</div>
+<script src="./Login_files/particles.js.download"></script>
+
+{% endblock %}

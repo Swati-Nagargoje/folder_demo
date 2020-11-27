@@ -1,0 +1,228 @@
+{% extends 'main.html' %}
+
+{% block title %}
+	<title>{{ the_title }}</title>
+{% endblock %}
+	
+{% block links %}
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/react-tabs.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/main.f388728c.chunk.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}">
+			
+		<style>
+		.switch-field {
+	display: flex;
+	margin-bottom: 36px;
+	overflow: hidden;
+}
+
+.switch-field input {
+	position: absolute !important;
+	clip: rect(0, 0, 0, 0);
+	height: 1px;
+	width: 1px;
+	border: 0;
+	overflow: hidden;
+}
+
+.switch-field label {
+	background-color: #e4e4e4;
+	color: rgba(0, 0, 0, 0.6);
+	font-size: 14px;
+	line-height: 1;
+	text-align: center;
+	padding: 8px 16px;
+	margin-right: -1px;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
+	transition: all 0.1s ease-in-out;
+}
+
+
+.switch-field input:checked + label {
+	background-color: #fda366;
+	box-shadow: none;
+}
+
+.switch-field label:first-of-type {
+	border-radius: 4px 0 0 4px;
+}
+
+.switch-field label:last-of-type {
+	border-radius: 0 4px 4px 0;
+}		
+button{
+    padding: 5px 15px;
+    border: 1px solid #d84d0a;
+    color:  #d84d0a;
+    border-radius: 5px;
+    font-weight: 700;
+}
+button:hover{
+    background-color:  #d84d0a;
+    color:  #ffffff;
+    font-weight: 700;
+}
+button:visited{
+    background-color:  #d84d0a;
+    color:  #ffffff;
+    font-weight: 700;
+}
+</style>
+
+{% endblock %}
+	
+	
+{% block scripts %}
+<script type="text/javascript" async="" src="{{url_for('static', filename='js/analytics.js')}}"></script>
+<script async="" src="{{url_for('static', filename='js/MathJax.js')}}">MathJax.Hub.Config({tex2jax:{inlineMath:[["$","$"],["\\(","\\)"]],displayMath:[["$$","$$"],["\\[","\\]"]],processEscapes:!0,processEnvironments:!0}})</script>
+<script async="" src="{{url_for('static', filename='js/js')}}"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","UA-54984338-4")</script>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
+<script type="text/javascript">
+function openPage(pageName) {
+  var i, tabcontent;
+  tabcontent = document.getElementsByClassName("tile");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  document.getElementById(pageName).style.display = "block";
+ // elmnt.style.backgroundColor = color;
+}
+
+// Get the element with id="defaultOpen" and click on it
+//document.getElementById("defaultOpen").click();
+</script>
+
+{% endblock %}
+
+{% block body %}
+<div id="MathJax_Message" style="display: none;"></div><div class="wrapper"><div id="root"><div><div><div><div><div><div>
+
+<header class="header"><div class="container"><div class="header-container"><div class="site-title"><a><span><img src="/static/img/tarang_logo_hq.png"  alt="Logo" class="tarang-logo"><div><h2 class="site-name">NUME<span>REGION's</span><strong>myTaraNG</strong></h2></div></span></a></div><div class="site-nav">
+<div class="site-links">
+    <form action="search_1" method="post">
+<ul><li><input type="search" name="query" id="query" placeholder="Search . . ." style="height:30px;"></li>
+    <button style ="height:30px; margin-left:0px" type="submit"><i class="fa fa-search"></i></button>
+</ul>
+    </form>
+
+</div>
+<ul class="site-menu"><li class="menu-signin"><a href="/dashboard">Dashboard</a></li><li class="menu-submit invite-button"><a href="/logout"><i class='fas fa-sign-out-alt' style='font-size:15px'></i></a></li>  
+</ul>
+
+</div></div></div></header>
+
+</div></div> <div class="container"></div>
+
+<div class="container"><div class="details">
+{% if student.photo %}
+<div class="details-side">
+
+<img src="{{url_for('static', filename=student.photo)}}" alt="User avatar" style="width:100px;height:100px">
+
+
+</div>
+{% else %}
+<div class="details-side"><p class="avatar"><a><img src="{{url_for('static', filename='img/dashboard/user.png')}}" alt="User avatar"></a></p></div>
+{% endif %}
+
+<div class="details-main"><div class="details-header"><div class="details-title"><h1 class="title">{{student.name}}</h1><p class="date">Joined <time datetime="2018-07-02">{{student.created_at}}</time></p></div><div class="details-counts"><div class="counts"><ul><li class="comments"><span class="count">{{teachers|length}}</span>Teachers</li></ul></div></div></div><div class="details-body"><div class="details-primary">
+
+<div>
+<div>
+	<ul>
+
+{%if student.year != 'None' %}
+	<li>Year: {{student.year}}</li> {% endif %}
+{%if student.institute != 'None' %}
+	<li>Institute: {{student.institute|safe}}</li> {% endif %}
+{%if student.department != 'None' %}
+	<li>Department: {{student.department}}</li> {% endif %}
+
+{%if student.skills != 'None' %}
+	<li>Skills: {{student.skills}}</li> {% endif %}
+<!-- {%if student.subjects != 'None' %}
+	<li>Subjetcs teaching: {{student.subjects}}</li> {% endif %}
+{%if student.education != 'None' %}
+	<li>Education: {{student.education}}</li> {% endif %}
+{%if student.experience != 'None' %}
+	<li>Experience: {{student.experience}}</li> {% endif %} -->
+{%if student.projects != 'None' %}
+	<li>Projects: {{student.projects}}</li> {% endif %}
+{%if student.publications != 'None' %}
+	<li>Publications: {{student.publications}}</li> {% endif %}
+{%if student.achievements != 'None' %}
+	<li>Achievements: {{student.achievements}}</li> {% endif %}
+<!-- {%if student.about != 'None' %}
+	<li>{{student.about}}</li> {% endif %} -->
+</ul></div>
+
+<ul class="networks"><li><a href="/edit_dashboard"><span></span><span>Edit Profile</span></a></li> 
+</li></ul></div>
+
+</div></div></div></div></div>
+
+
+{% if  teachers|length >0%}
+<div class="container">
+ <p>My teachers: 
+{% for teacher in teachers %}<a href="/profile/{{teacher.id}}"><span>{{teacher.name}}</span></a>, {% endfor %}
+</p>
+</div>
+{% else %}
+<div  class="container">
+ <p>You have not joined any classroom. Please search the respective faculty name to join the classroom.</p>
+</div>
+{% endif %}
+
+<div  class="container"  style="display: block; background-color: #e4e4e4; border-radius: 5px; margin:auto; padding-left:10px;">
+ <br><b>Intiative</b><br><p>We are promoting and publishing selective contents on our resource center. These quality contents are made free and openly available for all users. <br>To help out learners during this pendamic you may contribute for the same.<br> Learn together! Work together! Grow together!</p>
+ Link to get contents from <a><u>Resouce Center</u></a><br>
+ Link to <a><u>Download and activate TaraNG</u></a><br>
+ <br> 
+</div>
+
+<div class="container">
+<!-- <div class="tile" style="display: none;  background-color: #e4e4e4; " id ="FollowedContents"><div>
+<p> Second tab empty</p>
+</div>
+</div> -->
+{% if assignments_followed|length >0%}
+<div class="tile"  style="display: block;" id ="FollowedContents"><div><form name="searchForm"><div class="filters"><div class="sort-inputs"><label>Sort by:<select type="submit"><option value="Comments">Comments</option><option value="Date">Date</option><option value="Discover">Discover</option><option value="Views">Views</option><option value="Votes">Votes</option></select></label><label><select><option value="Today">Today</option><option value="This month">This month</option><option value="This year">This year</option><option value="All time">All time</option></select></label><p class="totals">{{assignments_own|length}}  Notes</p></div><div class="filter-inputs"><label>Subject:<select type="submit"><option>All</option><option>Antenna Design</option><option>Microwave Integrated Circuits</option><option>EMI/EMC</option></select></label><label>Content:<select type="submit"><option value="All">All</option><option value="Julia">Notes</option><option value="Matlab">Simulation</option><option value="Other">Submission</option></select></label><button><svg fill="currentColor" preserveAspectRatio="xMidYMid meet" height="1em" width="1em" viewBox="0 0 40 40" style="vertical-align: middle;"><g><path d="m27.2 18.6q0-4.2-2.9-7.1t-7.1-2.9-7 2.9-3 7.1 2.9 7 7.1 3 7.1-3 2.9-7z m11.4 18.5q0 1.2-0.8 2.1t-2 0.8q-1.2 0-2-0.8l-7.7-7.7q-4 2.8-8.9 2.8-3.2 0-6.1-1.3t-5-3.3-3.4-5-1.2-6.1 1.2-6.1 3.4-5.1 5-3.3 6.1-1.2 6.1 1.2 5 3.3 3.4 5.1 1.2 6.1q0 4.9-2.7 8.9l7.6 7.6q0.8 0.9 0.8 2z"></path></g></svg></button></div></div></form></div>
+<div class="summaries"><div>
+{% for assignment in assignments_followed %}
+<div class="notebook-summary" ><div class="specs">
+<h3 class="title"><a href="/note/{{assignment.id}}">{{assignment.topic_name}}</a></h3>
+<p class="date">Published  <time title="2018-07-03 12:01" datetime="2018-07-03T12:01:50+05:30">{{assignment.created_at}}</time> in <a href="">{{assignment.topic_subject}}</a>
+{% if assignment.lecturer_id == assignment.author_id %}
+<span><span class="dot"></span><span><span>Author</span></span></span>
+{% else %}
+<span><span class="dot"></span><span><span>Adopted</span></span></span>
+{% endif %}
+</p>
+<div class="short"><p>{{assignment.topic_abstract}}</p>
+</div> </div></div>
+{% endfor %}
+</div></div>
+
+<ul class="pagination text-center"><li class="pagination-previous disabled"><a tabindex="0">Prev</a></li><li class="current"><a tabindex="0" aria-label="Page 1 is your current page" aria-current="page">1</a></li><li class="pagination-next disabled"><a tabindex="0">Next</a></li></ul></div>
+{% else %}
+<div class="tile"  style="display: block;  background-color: #e4e4e4;" id ="FollowedContents">
+<p>No content to show here! Please Join classroom to get the contents!</p>
+</div>
+{% endif %}
+
+
+
+</div>
+
+
+
+
+
+</div></div></div></div></div></div>
+
+{% endblock %}
